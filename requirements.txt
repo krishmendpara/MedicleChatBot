@@ -1,12 +1,17 @@
-sentence-transformers>=2.7.0
-langchain
-flask
-pypdf
-python-dotenv
-pinecone[grpc]
-langchain-pinecone
-# lagchain_community
-langchain_openai
-langchain_experimental
+flask==3.0.3
 
--e .
+langchain==0.2.16
+langchain-core==0.2.43
+langchain-community==0.2.16
+langchain-groq==0.1.9
+
+faiss-cpu==1.8.0.post1
+sentence-transformers==2.7.0
+langchain-huggingface==0.0.3
+transformers==4.44.0
+torch==2.3.1
+
+python-dotenv==1.0.1
+
+huggingface-hub==0.24.6
+pydantic==2.7.4

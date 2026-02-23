@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Medical AI Assistant</title>
+
+<link rel="stylesheet" href="/static/style.css">
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header">
+🩺 Medical AI Assistant
+</div>
+
+<div id="chat-box" class="chat-box">
+
+<div class="bot-message">
+Hello 👋 I am your Medical Assistant. Ask any medical question.
+</div>
+
+</div>
+
+<div class="input-area">
+
+<input
+id="input"
+placeholder="Ask medical question..."
+onkeypress="if(event.key==='Enter') sendMessage()"
+/>
+
+<button onclick="sendMessage()">Send</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+async function sendMessage()
+{
+
+let input = document.getElementById("input");
+
+let message = input.value.trim();
+
+if(message === "") return;
+
+let chatBox = document.getElementById("chat-box");
+
+
+// user message
+chatBox.innerHTML += `
+<div class="user-message">
+${message}
+</div>
+`;
+
+input.value = "";
+
+
+// typing
+chatBox.innerHTML += `
+<div id="typing" class="typing">
+Medical AI is thinking...
+</div>
+`;
+
+chatBox.scrollTop = chatBox.scrollHeight;
+
+
+// API call
+let response = await fetch("/chat",
+{
+method: "POST",
+headers: {"Content-Type":"application/json"},
+body: JSON.stringify({message: message})
+});
+
+let data = await response.json();
+
+
+// remove typing
+document.getElementById("typing").remove();
+
+
+// bot message
+chatBox.innerHTML += `
+<div class="bot-message">
+${data.answer}
+</div>
+`;
+
+chatBox.scrollTop = chatBox.scrollHeight;
+
+}
+
+</script>
+
+</body>
+</html>
